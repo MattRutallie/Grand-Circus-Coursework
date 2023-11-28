@@ -1,0 +1,37 @@
+name: Docker Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11.6
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Build Docker image
+      run: |
+        docker build -t MattRutallie/Grand-Circus-Coursework/kafka_wikimedia_pipeline:${{ github.sha }} .
+        docker tag MattRutallie/Grand-Circus-Coursework/kafka_wikimedia_pipeline:${{ github.sha }} MattRutallie/Grand-Circus-Coursework/kafka_wikimedia_pipeline:latest
+
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.mrutallie }} -p ${{ secrets.Redtru3k! }}
+
+    - name: Push to Docker Hub
+      run: |
+        docker push MattRutallie/Grand-Circus-Coursework/kafka_wikimedia_pipeline:${{ github.sha }}
+        docker push MattRutallie/Grand-Circus-Coursework/kafka_wikimedia_pipeline:latest
