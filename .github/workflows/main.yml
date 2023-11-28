@@ -29,7 +29,7 @@ jobs:
         docker tag MattRutallie/Grand-Circus-Coursework/kafka_wikimedia_pipeline:${{ github.sha }} MattRutallie/Grand-Circus-Coursework/kafka_wikimedia_pipeline:latest
 
     - name: Login to Docker Hub
-      run: docker login -u ${{ secrets.mrutallie }} -p ${{ secrets.Redtru3k! }}
+      run: docker login -u ${{ secrets.mrutallie }} -p "${{ secrets.Redtru3k! }}"
 
     - name: Push to Docker Hub
       run: |
