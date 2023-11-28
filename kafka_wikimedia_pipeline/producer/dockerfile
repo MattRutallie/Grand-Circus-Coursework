@@ -1,0 +1,14 @@
+FROM confluentinc/cp-kafka:latest
+USER root
+
+WORKDIR /app
+ 
+COPY requirements.txt /app/
+COPY kafka_producer.py /app/
+
+RUN wget https://bootstrap.pypa.io/get-pip.py
+RUN python get-pip.py
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+
+
+CMD ["python", "kafka_producer.py"]
